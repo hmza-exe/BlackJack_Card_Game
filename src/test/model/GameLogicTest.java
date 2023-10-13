@@ -61,6 +61,17 @@ public class GameLogicTest {
     }
 
     @Test
+    void testPlayerHitsWithReducedAceBust() {
+        player.addCardAndHandSum(new Card("A", "Hearts")); // Player has an Ace initially
+        player.addCardAndHandSum(new Card("9", "Clubs")); // Player's hand sum will be <= 21
+
+        testGameLogic.playerHits();
+
+        assertEquals(5, player.getPlayerHand().size());
+        assertTrue(testGameLogic.isPlayerBust());
+    }
+
+    @Test
     void testPlayerStandsWithDealerUnder17Points() {
         dealer.addCardAndHandSum(new Card("2", "Diamonds"));
         dealer.addCardAndHandSum(new Card("4", "Spades"));
@@ -134,9 +145,16 @@ public class GameLogicTest {
 
     @Test
     void testPlayerStandsWithEqualFinalSums() {
-        dealer.addCardAndHandSum(new Card("5", "Diamonds")); // Example: Simulating dealer getting a 5
-        dealer.reduceDealerAce(); // Reducing Ace value to get exactly 17
+        // Set up the dealer's hand
+        dealer.addCardAndHandSum(new Card("7", "Clubs"));
+        dealer.addCardAndHandSum(new Card("10", "Hearts"));
+        dealer.reduceDealerAce();
 
+        // Set up the player's hand
+        player.addCardAndHandSum(new Card("8", "Diamonds"));
+        player.addCardAndHandSum(new Card("9", "Spades"));
+
+        // Player stands
         testGameLogic.playerStands();
 
         int finalPlayerHandSum = player.getPlayerHandSum();
@@ -154,6 +172,37 @@ public class GameLogicTest {
             assertTrue(testGameLogic.isPlayerWin());
         }
     }
+
+    @Test
+    void testPlayerStandsWithEqualFinalSumsAgain() {
+        // Set up the dealer's hand
+        dealer.addCardAndHandSum(new Card("7", "Clubs"));
+        dealer.addCardAndHandSum(new Card("10", "Hearts"));
+        dealer.reduceDealerAce();
+
+        // Set up the player's hand
+        player.addCardAndHandSum(new Card("10", "Diamonds"));
+        player.addCardAndHandSum(new Card("7", "Spades"));
+
+        // Player stands
+        testGameLogic.playerStands();
+
+        int finalPlayerHandSum = player.getPlayerHandSum();
+        int finalDealerHandSum = dealer.getDealerHandSum();
+
+        if (finalPlayerHandSum > 21) {
+            assertTrue(testGameLogic.isPlayerBust());
+        } else if (finalDealerHandSum > 21) {
+            assertTrue(testGameLogic.isDealerBust());
+        } else if (finalDealerHandSum == finalPlayerHandSum) {
+            assertTrue(testGameLogic.isPlayerTie());
+        } else if (finalDealerHandSum > finalPlayerHandSum) {
+            assertFalse(testGameLogic.isPlayerWin());
+        } else {
+            assertTrue(testGameLogic.isPlayerWin());
+        }
+    }
+
 
     @Test
     void testPlayerStandsWithFinalPlayerHandGreaterThanFinalDealerHand() {
@@ -185,6 +234,9 @@ public class GameLogicTest {
         dealer.addCardAndHandSum(new Card("10", "Hearts"));
         dealer.reduceDealerAce();
 
+        player.addCardAndHandSum(new Card("7", "Diamonds"));
+        player.addCardAndHandSum(new Card("8", "Spades"));
+
         testGameLogic.playerStands();
 
         int finalPlayerHandSum = player.getPlayerHandSum();
@@ -202,6 +254,34 @@ public class GameLogicTest {
             assertTrue(testGameLogic.isPlayerWin());
         }
     }
+
+    @Test
+    void testPlayerStandsWithFinalPlayerHandLessThanFinalDealerHandAgain() {
+        dealer.addCardAndHandSum(new Card("10", "Clubs"));
+        dealer.addCardAndHandSum(new Card("10", "Hearts"));
+        dealer.reduceDealerAce();
+
+        player.addCardAndHandSum(new Card("7", "Diamonds"));
+        player.addCardAndHandSum(new Card("8", "Spades"));
+
+        testGameLogic.playerStands();
+
+        int finalPlayerHandSum = player.getPlayerHandSum();
+        int finalDealerHandSum = dealer.getDealerHandSum();
+
+        if (finalPlayerHandSum > 21) {
+            assertTrue(testGameLogic.isPlayerBust());
+        } else if (finalDealerHandSum > 21) {
+            assertTrue(testGameLogic.isDealerBust());
+        } else if (finalDealerHandSum == finalPlayerHandSum) {
+            assertTrue(testGameLogic.isPlayerTie());
+        } else if (finalDealerHandSum > finalPlayerHandSum) {
+            assertFalse(testGameLogic.isPlayerWin());
+        } else {
+            assertTrue(testGameLogic.isPlayerWin());
+        }
+    }
+
 
     @Test
     void testPlayerBusts() {

@@ -7,6 +7,11 @@
       </map>
     </option>
   </component>
+  <component name="EntryPointsManager">
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="org.junit.jupiter.api.Test" />
+    </list>
+  </component>
   <component name="ProjectResources">
     <resource url="http://checkstyle.sourceforge.net/dtds/configuration_1_3.dtd" location="$PROJECT_DIR$/checkstyle.xml" />
   </component>

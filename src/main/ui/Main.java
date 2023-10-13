@@ -1,17 +1,10 @@
 package ui;
 
-//import model.Dealer;
-//import model.DeckOfCards;
-//import model.PlayersHand;
-import model.GameLogic;
+    // The Main class serves as the entry point for the Blackjack game application.
+    // It creates a new instance of BlackJackApp to start the game.
 
 public class Main {
     public static void main(String[] args) {
-        GameLogic game = new GameLogic();
-        game.startNewRound();
-        game.dealerPlays();
-        game.playerHits();
-        game.playerStands();
-        game.determineRoundOutcome();
+        new BlackJackApp();
     }
 }

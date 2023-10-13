@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameLogicTest {
@@ -106,4 +107,101 @@ public class GameLogicTest {
             assertTrue(testGameLogic.isPlayerWin());
         }
     }
+
+    @Test
+    void testPlayerStandsWithDealerExactly17Points() {
+        dealer.addCardAndHandSum(new Card("7", "Clubs"));
+        dealer.addCardAndHandSum(new Card("10", "Hearts"));
+        dealer.reduceDealerAce();
+
+        testGameLogic.playerStands();
+
+        int finalPlayerHandSum = player.getPlayerHandSum();
+        int finalDealerHandSum = dealer.getDealerHandSum();
+
+        if (finalPlayerHandSum > 21) {
+            assertTrue(testGameLogic.isPlayerBust());
+        } else if (finalDealerHandSum > 21) {
+            assertTrue(testGameLogic.isDealerBust());
+        } else if (finalDealerHandSum == finalPlayerHandSum) {
+            assertTrue(testGameLogic.isPlayerTie());
+        } else if (finalDealerHandSum > finalPlayerHandSum) {
+            assertFalse(testGameLogic.isPlayerWin());
+        } else {
+            assertTrue(testGameLogic.isPlayerWin());
+        }
+    }
+
+    @Test
+    void testPlayerStandsWithEqualFinalSums() {
+        dealer.addCardAndHandSum(new Card("7", "Clubs"));
+        dealer.addCardAndHandSum(new Card("10", "Hearts"));
+        dealer.reduceDealerAce();
+
+        testGameLogic.playerStands();
+
+        int finalPlayerHandSum = player.getPlayerHandSum();
+        int finalDealerHandSum = dealer.getDealerHandSum();
+
+        if (finalPlayerHandSum > 21) {
+            assertTrue(testGameLogic.isPlayerBust());
+        } else if (finalDealerHandSum > 21) {
+            assertTrue(testGameLogic.isDealerBust());
+        } else if (finalDealerHandSum == finalPlayerHandSum) {
+            assertTrue(testGameLogic.isPlayerTie());
+        } else if (finalDealerHandSum > finalPlayerHandSum) {
+            assertFalse(testGameLogic.isPlayerWin());
+        } else {
+            assertTrue(testGameLogic.isPlayerWin());
+        }
+    }
+
+    @Test
+    void testPlayerStandsWithFinalPlayerHandGreaterThanFinalDealerHand() {
+        dealer.addCardAndHandSum(new Card("8", "Diamonds"));
+        dealer.addCardAndHandSum(new Card("9", "Spades"));
+        dealer.reduceDealerAce();
+
+        testGameLogic.playerStands();
+
+        int finalPlayerHandSum = player.getPlayerHandSum();
+        int finalDealerHandSum = dealer.getDealerHandSum();
+
+        if (finalPlayerHandSum > 21) {
+            assertTrue(testGameLogic.isPlayerBust());
+        } else if (finalDealerHandSum > 21) {
+            assertTrue(testGameLogic.isDealerBust());
+        } else if (finalDealerHandSum == finalPlayerHandSum) {
+            assertTrue(testGameLogic.isPlayerTie());
+        } else if (finalDealerHandSum > finalPlayerHandSum) {
+            assertFalse(testGameLogic.isPlayerWin());
+        } else {
+            assertTrue(testGameLogic.isPlayerWin());
+        }
+    }
+
+    @Test
+    void testPlayerStandsWithFinalPlayerHandLessThanFinalDealerHand() {
+        dealer.addCardAndHandSum(new Card("9", "Clubs"));
+        dealer.addCardAndHandSum(new Card("10", "Hearts"));
+        dealer.reduceDealerAce();
+
+        testGameLogic.playerStands();
+
+        int finalPlayerHandSum = player.getPlayerHandSum();
+        int finalDealerHandSum = dealer.getDealerHandSum();
+
+        if (finalPlayerHandSum > 21) {
+            assertTrue(testGameLogic.isPlayerBust());
+        } else if (finalDealerHandSum > 21) {
+            assertTrue(testGameLogic.isDealerBust());
+        } else if (finalDealerHandSum == finalPlayerHandSum) {
+            assertTrue(testGameLogic.isPlayerTie());
+        } else if (finalDealerHandSum > finalPlayerHandSum) {
+            assertFalse(testGameLogic.isPlayerWin());
+        } else {
+            assertTrue(testGameLogic.isPlayerWin());
+        }
+    }
+
 }

@@ -2,6 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import static model.DeckOfCards.denominations;
@@ -145,4 +148,5 @@ public class DealerTest {
     void testGetDeck() {
         assertEquals(testDeck, testDealer.getDeck());
     }
+
 }

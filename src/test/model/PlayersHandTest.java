@@ -116,14 +116,14 @@ public class PlayersHandTest {
             testPlayersHand.reducePlayerAce();
             assertTrue(testPlayersHand.getPlayerHandSum() <= initialPlayerHandSum);
             assertTrue(testPlayersHand.getPlayerAceCount() <= initialPlayerAceCount);
-        } else if (testPlayersHand.getPlayerHandSum() < 21 && testPlayersHand.getPlayerAceCount() > 0) {
-            assertEquals( initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
+        } else if (testPlayersHand.getPlayerHandSum() <= 21 && testPlayersHand.getPlayerAceCount() > 0) {
+            assertEquals(initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
             assertEquals(initialPlayerAceCount, testPlayersHand.getPlayerAceCount());
         } else if (testPlayersHand.getPlayerHandSum() > 21 && testPlayersHand.getPlayerAceCount() == 0) {
-            assertEquals( initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
+            assertEquals(initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
             assertEquals(initialPlayerAceCount, testPlayersHand.getPlayerAceCount());
         } else {
-            assertEquals( initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
+            assertEquals(initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
             assertEquals(initialPlayerAceCount, testPlayersHand.getPlayerAceCount());
         }
     }

@@ -74,41 +74,83 @@ public class PlayersHandTest {
     }
 
     @Test
-    void testAddAceCount() {
-        Card drawnCard = testDeck.drawCard();
+    void testAddAceCountWhenDrawnCardIsAce() {
+        Card drawnCard = new Card("A", "Spades"); // Simulating an Ace being drawn
         testPlayersHand.addCardAndHandSum(drawnCard);
         testPlayersHand.addAceCount(drawnCard);
 
-        if (drawnCard.isAce()) {
-            assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
-        } else {
-            assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
-        }
+        assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
     }
 
     @Test
-    void testAddMultipleAceCounts() {
-        Card firstDrawnCard = testDeck.drawCard();
+    void testAddAceCountWhenDrawnCardIsNotAce() {
+        Card drawnCard = new Card("K", "Hearts"); // Simulating a non-Ace card being drawn
+        testPlayersHand.addCardAndHandSum(drawnCard);
+        testPlayersHand.addAceCount(drawnCard);
+
+        assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
+    }
+
+    @Test
+    void testAddMultipleAceCountsWhenFirstDrawnCardIsAce() {
+        Card firstDrawnCard = new Card("A", "Diamonds"); // Simulating an Ace being drawn
         testPlayersHand.addCardAndHandSum(firstDrawnCard);
         testPlayersHand.addAceCount(firstDrawnCard);
 
-        if (firstDrawnCard.isAce()) {
-            assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
-        } else {
-            assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
-        }
+        assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
 
         int firstAddAceCountResult = testPlayersHand.getPlayerAceCount();
 
-        Card secondDrawnCard = testDeck.drawCard();
+        Card secondDrawnCard = new Card("9", "Clubs"); // Simulating a non-Ace card being drawn
         testPlayersHand.addCardAndHandSum(secondDrawnCard);
         testPlayersHand.addAceCount(secondDrawnCard);
 
-        if (secondDrawnCard.isAce()) {
-            assertTrue(testPlayersHand.getPlayerAceCount() > firstAddAceCountResult);
-        } else {
-            assertEquals(testPlayersHand.getPlayerAceCount(), firstAddAceCountResult);
-        }
+        assertEquals(testPlayersHand.getPlayerAceCount(), firstAddAceCountResult);
+    }
+
+    @Test
+    void testAddMultipleAceCountsWhenFirstDrawnCardIsNotAce() {
+        Card firstDrawnCard = new Card("K", "Spades"); // Simulating a non-Ace card being drawn
+        testPlayersHand.addCardAndHandSum(firstDrawnCard);
+        testPlayersHand.addAceCount(firstDrawnCard);
+
+        assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
+
+        int firstAddAceCountResult = testPlayersHand.getPlayerAceCount();
+
+        Card secondDrawnCard = new Card("A", "Hearts"); // Simulating an Ace being drawn
+        testPlayersHand.addCardAndHandSum(secondDrawnCard);
+        testPlayersHand.addAceCount(secondDrawnCard);
+
+        assertTrue(testPlayersHand.getPlayerAceCount() > firstAddAceCountResult);
+    }
+
+    @Test
+    void testAddAceCountWhenBothCardsAreAces() {
+        Card firstDrawnCard = new Card("A", "Spades");
+        Card secondDrawnCard = new Card("A", "Hearts");
+
+        testPlayersHand.addCardAndHandSum(firstDrawnCard);
+        testPlayersHand.addCardAndHandSum(secondDrawnCard);
+
+        testPlayersHand.addAceCount(firstDrawnCard);
+        testPlayersHand.addAceCount(secondDrawnCard);
+
+        assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
+    }
+
+    @Test
+    void testAddAceCountWhenNeitherCardIsAce() {
+        Card firstDrawnCard = new Card("K", "Spades");
+        Card secondDrawnCard = new Card("Q", "Hearts");
+
+        testPlayersHand.addCardAndHandSum(firstDrawnCard);
+        testPlayersHand.addCardAndHandSum(secondDrawnCard);
+
+        testPlayersHand.addAceCount(firstDrawnCard);
+        testPlayersHand.addAceCount(secondDrawnCard);
+
+        assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
     }
 
     @Test

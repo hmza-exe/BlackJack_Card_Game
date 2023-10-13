@@ -88,41 +88,83 @@ public class DealerTest {
     }
 
     @Test
-    void testAddAceCount() {
-        Card drawnCard = testDeck.drawCard();
+    void testAddAceCountWhenDrawnCardIsAce() {
+        Card drawnCard = new Card("A", "Spades"); // Simulating an Ace being drawn
         testDealer.addCardAndHandSum(drawnCard);
         testDealer.addAceCount(drawnCard);
 
-        if (drawnCard.isAce()) {
-            assertTrue(testDealer.getDealerAceCount() > initialDealerAceCount);
-        } else {
-            assertTrue(testDealer.getDealerAceCount() == initialDealerAceCount);
-        }
+        assertTrue(testDealer.getDealerAceCount() > initialDealerAceCount);
     }
 
     @Test
-    void testAddMultipleAceCounts() {
-        Card firstDrawnCard = testDeck.drawCard();
+    void testAddAceCountWhenDrawnCardIsNotAce() {
+        Card drawnCard = new Card("K", "Hearts"); // Simulating a non-Ace card being drawn
+        testDealer.addCardAndHandSum(drawnCard);
+        testDealer.addAceCount(drawnCard);
+
+        assertEquals(testDealer.getDealerAceCount(), initialDealerAceCount);
+    }
+
+    @Test
+    void testAddMultipleAceCountsWhenFirstDrawnCardIsAce() {
+        Card firstDrawnCard = new Card("A", "Diamonds"); // Simulating an Ace being drawn
         testDealer.addCardAndHandSum(firstDrawnCard);
         testDealer.addAceCount(firstDrawnCard);
 
-        if (firstDrawnCard.isAce()) {
-            assertTrue(testDealer.getDealerAceCount() > initialDealerAceCount);
-        } else {
-            assertTrue(testDealer.getDealerAceCount() == initialDealerAceCount);
-        }
+        assertTrue(testDealer.getDealerAceCount() > initialDealerAceCount);
 
         int firstAddAceCountResult = testDealer.getDealerAceCount();
 
-        Card secondDrawnCard = testDeck.drawCard();
+        Card secondDrawnCard = new Card("9", "Clubs"); // Simulating a non-Ace card being drawn
         testDealer.addCardAndHandSum(secondDrawnCard);
         testDealer.addAceCount(secondDrawnCard);
 
-        if (secondDrawnCard.isAce()) {
-            assertTrue(testDealer.getDealerAceCount() > firstAddAceCountResult);
-        } else {
-            assertTrue(testDealer.getDealerAceCount() == firstAddAceCountResult);
-        }
+        assertEquals(testDealer.getDealerAceCount(), firstAddAceCountResult);
+    }
+
+    @Test
+    void testAddMultipleAceCountsWhenFirstDrawnCardIsNotAce() {
+        Card firstDrawnCard = new Card("K", "Spades"); // Simulating a non-Ace card being drawn
+        testDealer.addCardAndHandSum(firstDrawnCard);
+        testDealer.addAceCount(firstDrawnCard);
+
+        assertEquals(testDealer.getDealerAceCount(), initialDealerAceCount);
+
+        int firstAddAceCountResult = testDealer.getDealerAceCount();
+
+        Card secondDrawnCard = new Card("A", "Hearts"); // Simulating an Ace being drawn
+        testDealer.addCardAndHandSum(secondDrawnCard);
+        testDealer.addAceCount(secondDrawnCard);
+
+        assertTrue(testDealer.getDealerAceCount() > firstAddAceCountResult);
+    }
+
+    @Test
+    void testAddAceCountWhenBothCardsAreAces() {
+        Card firstDrawnCard = new Card("A", "Spades");
+        Card secondDrawnCard = new Card("A", "Hearts");
+
+        testDealer.addCardAndHandSum(firstDrawnCard);
+        testDealer.addCardAndHandSum(secondDrawnCard);
+
+        testDealer.addAceCount(firstDrawnCard);
+        testDealer.addAceCount(secondDrawnCard);
+
+        assertTrue(testDealer.getDealerAceCount() > initialDealerAceCount);
+    }
+
+    @Test
+    void testAddAceCountWhenNeitherCardIsAce() {
+        Card firstDrawnCard = new Card("K", "Spades");
+        Card secondDrawnCard = new Card("Q", "Hearts");
+
+        testDealer.addCardAndHandSum(firstDrawnCard);
+        testDealer.addCardAndHandSum(secondDrawnCard);
+
+        testDealer.addAceCount(firstDrawnCard);
+        testDealer.addAceCount(secondDrawnCard);
+
+        assertEquals(testDealer.getDealerAceCount(), initialDealerAceCount);
     }
 
     @Test

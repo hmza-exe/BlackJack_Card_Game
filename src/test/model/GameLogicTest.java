@@ -134,9 +134,8 @@ public class GameLogicTest {
 
     @Test
     void testPlayerStandsWithEqualFinalSums() {
-        dealer.addCardAndHandSum(new Card("7", "Clubs"));
-        dealer.addCardAndHandSum(new Card("10", "Hearts"));
-        dealer.reduceDealerAce();
+        dealer.addCardAndHandSum(new Card("5", "Diamonds")); // Example: Simulating dealer getting a 5
+        dealer.reduceDealerAce(); // Reducing Ace value to get exactly 17
 
         testGameLogic.playerStands();
 
@@ -203,5 +202,17 @@ public class GameLogicTest {
             assertTrue(testGameLogic.isPlayerWin());
         }
     }
+
+    @Test
+    void testPlayerBusts() {
+        player.addCardAndHandSum(new Card("10", "Hearts"));
+        player.addCardAndHandSum(new Card("9", "Clubs")); // Player's hand sum will be > 21
+        player.reducePlayerAce(); // Reducing Ace value
+
+        testGameLogic.playerStands();
+
+        assertTrue(testGameLogic.isPlayerBust());
+    }
+
 
 }

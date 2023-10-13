@@ -6,8 +6,8 @@ import model.Dealer;
 import model.GameLogic;
 import model.PlayersHand;
 
-    // The BlackJackApp class serves as the user interface for a simplified Blackjack game.
-    // It allows the player to interact with the game, make decisions (Hit or Stand), and displays game progress.
+// The BlackJackApp class serves as the user interface for a simplified Blackjack game.
+// It allows the player to interact with the game, make decisions (Hit or Stand), and displays game progress.
 
 public class BlackJackApp {
     static String STARTING_MESSAGE = "!! WELCOME BLACKJACK ROYALE !!";

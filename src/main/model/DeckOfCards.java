@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import model.Card;
-    // The DeckOfCards class represents a deck of playing cards.
-    // It can be used to build, shuffle, draw cards from, and check if the deck is empty.
+// The DeckOfCards class represents a deck of playing cards.
+// It can be used to build, shuffle, draw cards from, and check if the deck is empty.
 
 public class DeckOfCards {
     private static ArrayList<Card> deckOfCards;

@@ -1,7 +1,7 @@
 package model;
 
-    // The Card class represents an individual playing card.
-    // Each card has a denomination (e.g., "2", "Ace") and a suit (e.g., "Hearts", "Spades").
+// The Card class represents an individual playing card.
+// Each card has a denomination (e.g., "2", "Ace") and a suit (e.g., "Hearts", "Spades").
 
 public class Card {
     private String denomination;

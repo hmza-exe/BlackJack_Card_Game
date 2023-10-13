@@ -1,7 +1,7 @@
 package model;
 
-    // The GameLogic class represents the logic of a card game, managing player actions and determining outcomes.
-    // It coordinates interactions between the player, dealer, and deck of cards.
+// The GameLogic class represents the logic of a card game, managing player actions and determining outcomes.
+// It coordinates interactions between the player, dealer, and deck of cards.
 
 
 public class GameLogic {

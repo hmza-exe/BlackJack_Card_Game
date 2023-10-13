@@ -2,8 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
-     // The PlayersHand class represents the hand of a player in a card game.
-    // It manages the player's hand, including calculating the hand's value and handling Aces.
+// The PlayersHand class represents the hand of a player in a card game.
+// It manages the player's hand, including calculating the hand's value and handling Aces.
 
 public class PlayersHand {
     private ArrayList<Card> playerHand;

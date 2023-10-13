@@ -2,8 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
-    // The Dealer class represents the dealer in a card game.
-    // It manages the dealer's hand, including a hidden card, and calculates the hand's value.
+// The Dealer class represents the dealer in a card game.
+// It manages the dealer's hand, including a hidden card, and calculates the hand's value.
 
 public class Dealer {
     private Card hiddenCard;

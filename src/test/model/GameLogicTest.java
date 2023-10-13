@@ -60,7 +60,7 @@ public class GameLogicTest {
     }
 
     @Test
-    void testPlayerStands() {
+    void testPlayerStandsAndDealerHas17Points() {
         int dealerHandSum = dealer.getDealerHandSum();
 
         if (dealerHandSum > 17) {
@@ -80,10 +80,23 @@ public class GameLogicTest {
                 assertTrue(testGameLogic.isPlayerTie());
             } else if (finalDealerHandSum > finalPlayerHandSum) {
                 assertFalse(testGameLogic.isPlayerWin());
-            } else {
+            } else if (finalPlayerHandSum < 21) {
+                assertFalse(testGameLogic.isPlayerBust());
+            } else if (finalDealerHandSum < 21) {
+                assertFalse(testGameLogic.isPlayerBust());
+            } else if (finalDealerHandSum != finalPlayerHandSum) {
+                assertFalse(testGameLogic.isPlayerBust());
+            } else if (finalDealerHandSum < finalPlayerHandSum) {
                 assertTrue(testGameLogic.isPlayerWin());
             }
-        } else {
+        }
+    }
+
+    @Test
+    void testPlayerStandsAndDealerDoesNotHave17Points() {
+        int dealerHandSum = dealer.getDealerHandSum();
+
+        if (dealerHandSum < 17) {
             testGameLogic.playerStands();
             assertTrue(dealer.getDealersHand().size() > 2);
 
@@ -94,7 +107,6 @@ public class GameLogicTest {
             int finalDealerHandSum = dealer.getDealerHandSum();
 
 
-
             if (finalPlayerHandSum > 21) {
                 assertTrue(testGameLogic.isPlayerBust());
             } else if (finalDealerHandSum > 21) {
@@ -103,11 +115,15 @@ public class GameLogicTest {
                 assertTrue(testGameLogic.isPlayerTie());
             } else if (finalDealerHandSum > finalPlayerHandSum) {
                 assertFalse(testGameLogic.isPlayerWin());
-            } else {
+            } else if (finalPlayerHandSum < 21) {
+                assertFalse(testGameLogic.isPlayerBust());
+            } else if (finalDealerHandSum < 21) {
+                assertFalse(testGameLogic.isPlayerBust());
+            } else if (finalDealerHandSum != finalPlayerHandSum) {
+                assertFalse(testGameLogic.isPlayerBust());
+            } else if (finalDealerHandSum < finalPlayerHandSum) {
                 assertTrue(testGameLogic.isPlayerWin());
             }
         }
-
-
     }
 }

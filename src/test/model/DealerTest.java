@@ -126,8 +126,8 @@ public class DealerTest {
     void testReduceDealerAce() {
         if (testDealer.getDealerHandSum() > 21 && testDealer.getDealerAceCount() > 0) {
             testDealer.reduceDealerAce();
-            assertTrue(testDealer.getDealerHandSum() <= initialDealerHandSum);
-            assertTrue(testDealer.getDealerAceCount() <= initialDealerAceCount);
+            assertTrue(testDealer.getDealerHandSum() < initialDealerHandSum);
+            assertTrue(testDealer.getDealerAceCount() < initialDealerAceCount);
         } else if (testDealer.getDealerHandSum() < 21 && testDealer.getDealerAceCount() > 0) {
             assertEquals( initialDealerHandSum, testDealer.getDealerHandSum());
             assertEquals(initialDealerAceCount, testDealer.getDealerAceCount());

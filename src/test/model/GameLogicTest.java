@@ -72,6 +72,15 @@ public class GameLogicTest {
     }
 
     @Test
+    void testPlayerHitsWithFalseCondition() {
+        int initialHandSize = player.getPlayerHand().size();
+        testGameLogic.playerHits();
+        assertEquals(initialHandSize + 1, player.getPlayerHand().size());
+        assertFalse(testGameLogic.isPlayerBust());
+    }
+
+
+    @Test
     void testPlayerStandsWithDealerUnder17Points() {
         dealer.addCardAndHandSum(new Card("2", "Diamonds"));
         dealer.addCardAndHandSum(new Card("4", "Spades"));

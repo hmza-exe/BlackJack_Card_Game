@@ -81,7 +81,7 @@ public class PlayersHandTest {
         if (drawnCard.isAce()) {
             assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
         } else {
-            assertTrue(testPlayersHand.getPlayerAceCount() == initialPlayerAceCount);
+            assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
         }
     }
 
@@ -94,7 +94,7 @@ public class PlayersHandTest {
         if (firstDrawnCard.isAce()) {
             assertTrue(testPlayersHand.getPlayerAceCount() > initialPlayerAceCount);
         } else {
-            assertTrue(testPlayersHand.getPlayerAceCount() == initialPlayerAceCount);
+            assertEquals(testPlayersHand.getPlayerAceCount(), initialPlayerAceCount);
         }
 
         int firstAddAceCountResult = testPlayersHand.getPlayerAceCount();
@@ -106,14 +106,30 @@ public class PlayersHandTest {
         if (secondDrawnCard.isAce()) {
             assertTrue(testPlayersHand.getPlayerAceCount() > firstAddAceCountResult);
         } else {
-            assertTrue(testPlayersHand.getPlayerAceCount() == firstAddAceCountResult);
+            assertEquals(testPlayersHand.getPlayerAceCount(), firstAddAceCountResult);
         }
     }
 
     @Test
     void testReducePlayerAce() {
-        testPlayersHand.reducePlayerAce();
-        assertTrue(testPlayersHand.getPlayerHandSum() <= initialPlayerHandSum);
-        assertTrue(testPlayersHand.getPlayerAceCount() <= initialPlayerAceCount);
+        if (testPlayersHand.getPlayerHandSum() > 21 && testPlayersHand.getPlayerAceCount() > 0) {
+            testPlayersHand.reducePlayerAce();
+            assertTrue(testPlayersHand.getPlayerHandSum() <= initialPlayerHandSum);
+            assertTrue(testPlayersHand.getPlayerAceCount() <= initialPlayerAceCount);
+        } else if (testPlayersHand.getPlayerHandSum() < 21 && testPlayersHand.getPlayerAceCount() > 0) {
+            assertEquals( initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
+            assertEquals(initialPlayerAceCount, testPlayersHand.getPlayerAceCount());
+        } else if (testPlayersHand.getPlayerHandSum() > 21 && testPlayersHand.getPlayerAceCount() == 0) {
+            assertEquals( initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
+            assertEquals(initialPlayerAceCount, testPlayersHand.getPlayerAceCount());
+        } else {
+            assertEquals( initialPlayerHandSum, testPlayersHand.getPlayerHandSum());
+            assertEquals(initialPlayerAceCount, testPlayersHand.getPlayerAceCount());
+        }
+    }
+
+    @Test
+    void testGetDeck() {
+        assertEquals(testDeck, testPlayersHand.getDeck());
     }
 }

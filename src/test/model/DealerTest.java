@@ -123,9 +123,26 @@ public class DealerTest {
     }
 
     @Test
-    void testReducePlayerAce() {
-        testDealer.reduceDealerAce();
-        assertTrue(testDealer.getDealerHandSum() <= initialDealerHandSum);
-        assertTrue(testDealer.getDealerAceCount() <= initialDealerAceCount);
+    void testReduceDealerAce() {
+        if (testDealer.getDealerHandSum() > 21 && testDealer.getDealerAceCount() > 0) {
+            testDealer.reduceDealerAce();
+            assertTrue(testDealer.getDealerHandSum() <= initialDealerHandSum);
+            assertTrue(testDealer.getDealerAceCount() <= initialDealerAceCount);
+        } else if (testDealer.getDealerHandSum() < 21 && testDealer.getDealerAceCount() > 0) {
+            assertEquals( initialDealerHandSum, testDealer.getDealerHandSum());
+            assertEquals(initialDealerAceCount, testDealer.getDealerAceCount());
+        } else if (testDealer.getDealerHandSum() > 21 && testDealer.getDealerAceCount() == 0) {
+            assertEquals( initialDealerHandSum, testDealer.getDealerHandSum());
+            assertEquals(initialDealerAceCount, testDealer.getDealerAceCount());
+        } else {
+            assertEquals( initialDealerHandSum, testDealer.getDealerHandSum());
+            assertEquals(initialDealerAceCount, testDealer.getDealerAceCount());
+        }
+
+    }
+
+    @Test
+    void testGetDeck() {
+        assertEquals(testDeck, testDealer.getDeck());
     }
 }

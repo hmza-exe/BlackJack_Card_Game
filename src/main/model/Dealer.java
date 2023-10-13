@@ -28,11 +28,15 @@ public class Dealer {
         this.dealersHand.add(hiddenCard);
         this.dealersHandWithHiddenCard.add(new Card("X", "X"));
         this.dealerHandSum += hiddenCard.getValue();
-        this.dealerAceCount += hiddenCard.isAce() ? 1 : 0;
+        if (hiddenCard.isAce()) {
+            this.dealerAceCount++;
+        }
 
         Card cardGoingToHand = currentDeck.remove(currentDeck.size() - 1);
         this.dealerHandSum += cardGoingToHand.getValue();
-        this.dealerAceCount += cardGoingToHand.isAce() ? 1 : 0;
+        if (cardGoingToHand.isAce()) {
+            this.dealerAceCount++;
+        }
         this.dealersHand.add(cardGoingToHand);
         this.dealersHandWithHiddenCard.add(cardGoingToHand);
     }
@@ -61,7 +65,9 @@ public class Dealer {
     // MODIFIES: this
     // EFFECTS: Adds the Ace count to the dealer's hand if the drawn card is an Ace.
     public void addAceCount(Card drawnCard) {
-        dealerAceCount += drawnCard.isAce() ? 1 : 0;
+        if (drawnCard.isAce()) {
+            dealerAceCount++;
+        }
     }
 
     // EFFECTS: Returns the list of cards in the dealer's hand.

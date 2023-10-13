@@ -43,7 +43,9 @@ public class PlayersHand {
     // MODIFIES: this
     // EFFECTS: Adds the Ace count to the player's hand if the drawn card is an Ace.
     public void addAceCount(Card drawnCard) {
-        playerAceCount += drawnCard.isAce() ? 1 : 0;
+        if (drawnCard.isAce()) {
+            playerAceCount++;
+        }
     }
 
     // MODIFIES: this

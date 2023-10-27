@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // The Dealer class represents the dealer in a card game.
 // It manages the dealer's hand, including a hidden card, and calculates the hand's value.
 
-public class Dealer {
+public class Dealer implements Writable {
     private Card hiddenCard;
     private ArrayList<Card> dealersHand;
     private ArrayList<Card> dealersHandWithHiddenCard;
@@ -98,5 +102,26 @@ public class Dealer {
     // EFFECTS: Returns the deck of cards used by the dealer
     public DeckOfCards getDeck() {
         return deck;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Dealer's Hand", dealerHandToJson());
+        return json;
+    }
+
+    private JSONArray dealerHandToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Card card : dealersHand) {
+            jsonArray.put(card.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    public void addCard(Card card) {
+        dealersHand.add(card);
     }
 }

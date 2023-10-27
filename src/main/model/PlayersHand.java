@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // The PlayersHand class represents the hand of a player in a card game.
 // It manages the player's hand, including calculating the hand's value and handling Aces.
 
-public class PlayersHand {
+public class PlayersHand implements Writable {
     private ArrayList<Card> playerHand;
     private int playerHandSum;
     private int playerAceCount;
@@ -76,5 +80,26 @@ public class PlayersHand {
     // EFFECTS: Returns the count of Aces in the player's hand.
     public int getPlayerAceCount() {
         return playerAceCount;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Player's Hand", playerHandToJson());
+        return json;
+    }
+
+    private JSONArray playerHandToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Card card : playerHand) {
+            jsonArray.put(card.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    public void addCard(Card card) {
+        playerHand.add(card);
     }
 }

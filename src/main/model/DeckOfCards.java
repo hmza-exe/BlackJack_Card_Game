@@ -1,14 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import model.Card;
 // The DeckOfCards class represents a deck of playing cards.
 // It can be used to build, shuffle, draw cards from, and check if the deck is empty.
 
-public class DeckOfCards {
+public class DeckOfCards implements Writable {
     private static ArrayList<Card> deckOfCards;
     private Random random = new Random();
     public static final List<String> denominations;
@@ -69,5 +71,26 @@ public class DeckOfCards {
     // EFFECTS: Returns true if the deck is empty, false otherwise.
     public boolean isDeckEmpty() {
         return deckOfCards.isEmpty();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Deck Of Cards", deckOfCardsToJson());
+        return json;
+    }
+
+    private JSONArray deckOfCardsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Card card : deckOfCards) {
+            jsonArray.put(card.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    public void addCard(Card card) {
+        deckOfCards.add(card);
     }
 }

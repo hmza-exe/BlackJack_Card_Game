@@ -27,5 +27,7 @@ multiple player modes, there's ample room for growth and refinement.
 
 - As a user, I want to be able to add cards to my hand from the deck.
 - As a user, I want to be able to see my hand of cards.
-- As a user, I want to be able to save my progress.
+- As a user, I want to see how many wins and losses I have.
 - As a user, I want to be able to keep track of my score.
+- As a user, I want to be able to save my progress if I want.
+- As a user, I want to be able to load my saved progress if I want.

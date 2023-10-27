@@ -31,10 +31,10 @@ public class BlackJackApp {
     private GameLogic newGame;
     private PlayersHand player;
     private Dealer dealer;
-    private int playerPoints = 0;
-    private int dealerPoints = 0;
-    private int playerWins = 0;
-    private int playerLosses = 0;
+//    private int this.gameState.getPlayerPoints() = 0;
+//    private int this.gameState.getDealerPoints() = 0;
+//    private int this.gameState.getPlayerWins() = 0;
+//    private int this.gameState.getPlayerLosses() = 0;
     private GameState gameState;
     private GameState loadedGameState;
 
@@ -115,19 +115,19 @@ public class BlackJackApp {
     // MODIFIES: this
     // EFFECTS: Tally and display points for the game.
     public void tallyPoints() {
-        gameState.setPlayerPoints(gameState.getPlayerPoints() + playerPoints);
-        gameState.setDealerPoints(gameState.getDealerPoints() + dealerPoints);
-        gameState.setPlayerWins(gameState.getPlayerWins() + playerWins);
-        gameState.setPlayerLosses(gameState.getPlayerLosses() + playerLosses);
+//        gameState.setPlayerPoints(gameState.getPlayerPoints() + this.gameState.getPlayerPoints());
+//        gameState.setPlayerWins(gameState.getPlayerWins() + this.gameState.getPlayerWins());
+//        gameState.setDealerPoints(gameState.getDealerPoints() + this.gameState.getDealerPoints());
+//        gameState.setPlayerLosses(gameState.getPlayerLosses() + this.gameState.getPlayerLosses());
 
-        System.out.println("\nPLAYER POINTS : [" + playerPoints + " point(s)]");
-        System.out.println("DEALER POINTS : [" + dealerPoints + " point(s)]");
-        System.out.println("PLAYER WINS : [" + playerWins + " win(s)]");
-        System.out.println("PLAYER LOSSES : [" + playerLosses + " loss(es)]");
+        System.out.println("\nPLAYER POINTS : [" + gameState.getPlayerPoints() + " point(s)]");
+        System.out.println("DEALER POINTS : [" + gameState.getDealerPoints() + " point(s)]");
+        System.out.println("PLAYER WINS : [" + gameState.getPlayerWins() + " win(s)]");
+        System.out.println("PLAYER LOSSES : [" + gameState.getPlayerLosses() + " loss(es)]");
 
-        if (playerPoints > dealerPoints) {
+        if (this.gameState.getPlayerPoints() > this.gameState.getDealerPoints()) {
             System.out.println("PLAYER has more points!\n");
-        } else if (playerPoints == dealerPoints) {
+        } else if (this.gameState.getPlayerPoints() == this.gameState.getDealerPoints()) {
             System.out.println("PLAYER and DEALER have the same points!\n");
         } else {
             System.out.println("DEALER has more points! \n");
@@ -146,8 +146,8 @@ public class BlackJackApp {
             displayPlayerAndDealerHand();
             System.out.println("\nPlayer hit 21! Player Wins! +1 point - PLAYER\n");
 
-            playerPoints++;
-            playerWins++;
+            this.gameState.setPlayerPoints(gameState.getPlayerPoints() + 1);
+            this.gameState.setPlayerWins(gameState.getPlayerWins() + 1);
 
             continueGame = isContinueGame(scanner, continueGame);
 
@@ -155,8 +155,8 @@ public class BlackJackApp {
             displayPlayerAndDealerHand();
             System.out.println("\nPlayer Bust! House Wins! +1 point - DEALER\n");
 
-            dealerPoints++;
-            playerLosses++;
+            this.gameState.setDealerPoints(gameState.getDealerPoints() + 1);
+            this.gameState.setPlayerLosses(gameState.getPlayerLosses() + 1);
 
             continueGame = isContinueGame(scanner, continueGame);
         }
@@ -173,8 +173,8 @@ public class BlackJackApp {
             displayPlayerAndDealerHand();
             System.out.println("\nPlayer Bust! House Wins! +1 point - DEALER\n");
 
-            dealerPoints++;
-            playerLosses++;
+            this.gameState.setDealerPoints(gameState.getDealerPoints() + 1);
+            this.gameState.setPlayerLosses(gameState.getPlayerLosses() + 1);
 
             continueGame = isContinueGame(scanner, continueGame);
 
@@ -182,8 +182,8 @@ public class BlackJackApp {
             displayPlayerAndDealerHand();
             System.out.println("\nHouse Bust! Player Wins! +1 point - PLAYER\n");
 
-            playerPoints++;
-            playerWins++;
+            this.gameState.setPlayerPoints(gameState.getPlayerPoints() + 1);
+            this.gameState.setPlayerWins(gameState.getPlayerWins() + 1);
 
             continueGame = isContinueGame(scanner, continueGame);
 
@@ -197,8 +197,8 @@ public class BlackJackApp {
             displayPlayerAndDealerHand();
             System.out.println("\nHouse has a lower hand! Player Wins! +1 point - PLAYER\n");
 
-            playerPoints++;
-            playerWins++;
+            this.gameState.setPlayerPoints(gameState.getPlayerPoints() + 1);
+            this.gameState.setPlayerWins(gameState.getPlayerWins() + 1);
 
             continueGame = isContinueGame(scanner, continueGame);
 
@@ -206,8 +206,8 @@ public class BlackJackApp {
             displayPlayerAndDealerHand();
             System.out.println("\nPlayer has a lower hand! House Wins! +1 point - DEALER\n");
 
-            dealerPoints++;
-            playerLosses++;
+            this.gameState.setDealerPoints(gameState.getDealerPoints() + 1);
+            this.gameState.setPlayerLosses(gameState.getPlayerLosses() + 1);
 
             continueGame = isContinueGame(scanner, continueGame);
 

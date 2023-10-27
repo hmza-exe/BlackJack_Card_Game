@@ -154,16 +154,13 @@ public class GameLogicTest {
 
     @Test
     void testPlayerStandsWithEqualFinalSums() {
-        // Set up the dealer's hand
         dealer.addCardAndHandSum(new Card("7", "Clubs"));
         dealer.addCardAndHandSum(new Card("10", "Hearts"));
         dealer.reduceDealerAce();
 
-        // Set up the player's hand
         player.addCardAndHandSum(new Card("8", "Diamonds"));
         player.addCardAndHandSum(new Card("9", "Spades"));
 
-        // Player stands
         testGameLogic.playerStands();
 
         int finalPlayerHandSum = player.getPlayerHandSum();
@@ -184,16 +181,13 @@ public class GameLogicTest {
 
     @Test
     void testPlayerStandsWithEqualFinalSumsAgain() {
-        // Set up the dealer's hand
         dealer.addCardAndHandSum(new Card("7", "Clubs"));
         dealer.addCardAndHandSum(new Card("10", "Hearts"));
         dealer.reduceDealerAce();
 
-        // Set up the player's hand
         player.addCardAndHandSum(new Card("10", "Diamonds"));
         player.addCardAndHandSum(new Card("7", "Spades"));
 
-        // Player stands
         testGameLogic.playerStands();
 
         int finalPlayerHandSum = player.getPlayerHandSum();

@@ -46,6 +46,7 @@ public class BlackJackApp {
         mainMenu();
     }
 
+    // EFFECTS: Displays the main menu and allows the user to choose an option (new, load, exit).
     public void mainMenu() {
         System.out.println(STARTING_MESSAGE);
         Scanner scanner = new Scanner(System.in);
@@ -87,6 +88,8 @@ public class BlackJackApp {
         playerHitOrStandLoop(scanner);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Handles the player's choice to hit or stand.
     public void playerHitOrStandLoop(Scanner scanner) {
         boolean continueGame = true;
 
@@ -109,6 +112,8 @@ public class BlackJackApp {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Tally and display points for the game.
     public void tallyPoints() {
         gameState.setPlayerPoints(gameState.getPlayerPoints() + playerPoints);
         gameState.setDealerPoints(gameState.getDealerPoints() + dealerPoints);
@@ -130,6 +135,8 @@ public class BlackJackApp {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Handles the player's choice to hit and updates the game state accordingly.
     private boolean playerHitRoute(Scanner scanner, boolean continueGame) {
         newGame.playerHits();
 
@@ -156,6 +163,8 @@ public class BlackJackApp {
         return continueGame;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Handles the player's choice to stand and updates the game state accordingly.
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private boolean playerStandRoute(Scanner scanner, boolean continueGame) {
         newGame.playerStands();
@@ -229,6 +238,7 @@ public class BlackJackApp {
         return continueGame;
     }
 
+    // EFFECTS: Asks the player if they want to continue with a new round.
     public boolean askPlayerIfTheyWantToContinue(Scanner scanner) {
         System.out.println("Continue with a new round? (y/n?)");
         String choice = scanner.next();
@@ -245,6 +255,7 @@ public class BlackJackApp {
         }
     }
 
+    // EFFECTS: Asks the player if they want to save their session.
     public boolean askPlayerToSave(Scanner scanner) {
         System.out.println("Do you want to save your session? (y/n)");
         String choice = scanner.next();
@@ -261,12 +272,16 @@ public class BlackJackApp {
         }
     }
 
+    // MODIFIES: jsonWriter
+    // EFFECTS: Saves the game state to a file.
     public void savePlayerFile(GameState gameState) throws FileNotFoundException {
         jsonWriter.open();
         jsonWriter.write(gameState);
         jsonWriter.close();
     }
 
+    // MODIFIES: loadedGameState
+    // EFFECTS: Loads the game state from a file and starts a new game with the loaded state.
     public void loadGame() {
         try {
             loadedGameState = jsonReader.read();

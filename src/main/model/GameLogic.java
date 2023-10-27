@@ -5,9 +5,9 @@ package model;
 
 
 public class GameLogic {
-    private PlayersHand playerHand;
-    private Dealer dealer;
-    private DeckOfCards deck;
+    private final PlayersHand playerHand;
+    private final Dealer dealer;
+    private final DeckOfCards deck;
     private boolean playerBust;
     private boolean playerWin;
     private boolean playerTie;
@@ -62,10 +62,8 @@ public class GameLogic {
             dealerBust = true;
         } else if (finalDealerHandSum == finalPlayerHandSum) {
             playerTie = true;
-        } else if (finalDealerHandSum > finalPlayerHandSum) {
-            playerWin = false;
         } else {
-            playerWin = true;
+            playerWin = finalDealerHandSum <= finalPlayerHandSum;
         }
     }
 

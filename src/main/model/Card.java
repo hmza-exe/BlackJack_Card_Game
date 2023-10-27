@@ -1,14 +1,12 @@
 package model;
 
-import org.json.JSONObject;
-import persistence.Writable;
 
 // The Card class represents an individual playing card.
 // Each card has a denomination (e.g., "2", "Ace") and a suit (e.g., "Hearts", "Spades").
 
-public class Card implements Writable {
-    private String denomination;
-    private String suit;
+public class Card {
+    private final String denomination;
+    private final String suit;
 
     // EFFECTS: Initializes a new Card object with the provided denomination and suit.
     public Card(String denomination, String suit) {
@@ -47,12 +45,4 @@ public class Card implements Writable {
         return suit;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-
-        json.put("denomination", denomination);
-        json.put("suit", suit);
-        return json;
-    }
 }

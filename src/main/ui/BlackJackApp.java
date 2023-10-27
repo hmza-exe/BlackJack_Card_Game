@@ -1,12 +1,15 @@
 package ui;
 
+import model.Dealer;
+import model.GameLogic;
+import model.GameState;
+import model.PlayersHand;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
-import model.*;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 
 // The BlackJackApp class serves as the user interface for a simplified Blackjack game.
 // It allows the player to interact with the game, make decisions (Hit or Stand), and displays game progress.
@@ -17,12 +20,14 @@ public class BlackJackApp {
     static {
         STARTING_MESSAGE =
                 "!! WELCOME BLACKJACK ROYALE !!"
-                + "\n\nMenu:"
-                + "\n- Start New Round ('new')"
-                + "\n- Load Old session ('load')"
-                + "\n- Exit ('exit')\n";
+                        + "\n\nMenu:"
+                        + "\n- Start New Round ('new')"
+                        + "\n- Load Old session ('load')"
+                        + "\n- Exit ('exit')\n";
     }
 
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
     private GameLogic newGame;
     private PlayersHand player;
     private Dealer dealer;
@@ -32,11 +37,6 @@ public class BlackJackApp {
     private int playerLosses = 0;
     private GameState gameState;
     private GameState loadedGameState;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
-
-
-    Scanner inputScanner = new Scanner(System.in);
 
     // EFFECTS: Initializes a new BlackJackApp object and starts the user interface.
     public BlackJackApp() {
@@ -87,7 +87,6 @@ public class BlackJackApp {
         playerHitOrStandLoop(scanner);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void playerHitOrStandLoop(Scanner scanner) {
         boolean continueGame = true;
 
@@ -98,201 +97,10 @@ public class BlackJackApp {
             scanner.nextLine();
 
             if (choice.equals("hit")) {
-                newGame.playerHits();
-
-                if (!newGame.isPlayerBust()) {
-                    displayPlayerAndHiddenDealerHand();
-                } else if (player.getPlayerHandSum() == 21) {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nPlayer hit 21! Player Wins! +1 point - PLAYER\n");
-
-                    playerPoints++;
-                    playerWins++;
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-
-                } else {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nPlayer Bust! House Wins! +1 point - DEALER\n");
-
-                    dealerPoints++;
-                    playerLosses++;
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-                }
+                continueGame = playerHitRoute(scanner, continueGame);
 
             } else if (choice.equals("stand")) {
-                newGame.playerStands();
-
-                if (newGame.isPlayerBust()) {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nPlayer Bust! House Wins! +1 point - DEALER\n");
-
-                    dealerPoints++;
-                    playerLosses++;
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-
-                } else if (newGame.isDealerBust()) {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nHouse Bust! Player Wins! +1 point - PLAYER\n");
-
-                    playerPoints++;
-                    playerWins++;
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-
-                } else if (newGame.isPlayerTie()) {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nIts a tie! No points!");
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-
-                } else if (newGame.isPlayerWin()) {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nHouse has a lower hand! Player Wins! +1 point - PLAYER\n");
-
-                    playerPoints++;
-                    playerWins++;
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-
-                } else if (!newGame.isPlayerWin()) {
-                    displayPlayerAndDealerHand();
-                    System.out.println("\nPlayer has a lower hand! House Wins! +1 point - DEALER\n");
-
-                    dealerPoints++;
-                    playerLosses++;
-
-                    if (askPlayerIfTheyWantToContinue(scanner)) {
-                        startANewGame(false);
-                    } else {
-                        tallyPoints();
-                        continueGame = false;
-
-                        if (askPlayerToSave(scanner)) {
-
-                            try {
-                                savePlayerFile(gameState);
-                            } catch (FileNotFoundException e) {
-                                System.out.println("Unable to save file!");
-                            }
-
-                            mainMenu();
-                        } else {
-                            mainMenu();
-                        }
-                    }
-
-                }
+                continueGame = playerStandRoute(scanner, continueGame);
 
             } else {
                 System.out.println("Invalid choice. Please enter Hit or Stand.\n");
@@ -307,10 +115,10 @@ public class BlackJackApp {
         gameState.setPlayerWins(gameState.getPlayerWins() + playerWins);
         gameState.setPlayerLosses(gameState.getPlayerLosses() + playerLosses);
 
-        System.out.println("\nPLAYER POINTS : [" + Integer.toString(playerPoints) + " point(s)]");
-        System.out.println("DEALER POINTS : [" + Integer.toString(dealerPoints) + " point(s)]");
-        System.out.println("PLAYER WINS : [" + Integer.toString(playerWins) + " win(s)]");
-        System.out.println("PLAYER LOSSES : [" + Integer.toString(playerLosses) + " loss(es)]");
+        System.out.println("\nPLAYER POINTS : [" + playerPoints + " point(s)]");
+        System.out.println("DEALER POINTS : [" + dealerPoints + " point(s)]");
+        System.out.println("PLAYER WINS : [" + playerWins + " win(s)]");
+        System.out.println("PLAYER LOSSES : [" + playerLosses + " loss(es)]");
 
         if (playerPoints > dealerPoints) {
             System.out.println("PLAYER has more points!\n");
@@ -320,6 +128,105 @@ public class BlackJackApp {
             System.out.println("DEALER has more points! \n");
         }
 
+    }
+
+    private boolean playerHitRoute(Scanner scanner, boolean continueGame) {
+        newGame.playerHits();
+
+        if (!newGame.isPlayerBust()) {
+            displayPlayerAndHiddenDealerHand();
+        } else if (player.getPlayerHandSum() == 21) {
+            displayPlayerAndDealerHand();
+            System.out.println("\nPlayer hit 21! Player Wins! +1 point - PLAYER\n");
+
+            playerPoints++;
+            playerWins++;
+
+            continueGame = isContinueGame(scanner, continueGame);
+
+        } else {
+            displayPlayerAndDealerHand();
+            System.out.println("\nPlayer Bust! House Wins! +1 point - DEALER\n");
+
+            dealerPoints++;
+            playerLosses++;
+
+            continueGame = isContinueGame(scanner, continueGame);
+        }
+        return continueGame;
+    }
+
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private boolean playerStandRoute(Scanner scanner, boolean continueGame) {
+        newGame.playerStands();
+
+        if (newGame.isPlayerBust()) {
+            displayPlayerAndDealerHand();
+            System.out.println("\nPlayer Bust! House Wins! +1 point - DEALER\n");
+
+            dealerPoints++;
+            playerLosses++;
+
+            continueGame = isContinueGame(scanner, continueGame);
+
+        } else if (newGame.isDealerBust()) {
+            displayPlayerAndDealerHand();
+            System.out.println("\nHouse Bust! Player Wins! +1 point - PLAYER\n");
+
+            playerPoints++;
+            playerWins++;
+
+            continueGame = isContinueGame(scanner, continueGame);
+
+        } else if (newGame.isPlayerTie()) {
+            displayPlayerAndDealerHand();
+            System.out.println("\nIts a tie! No points!");
+
+            continueGame = isContinueGame(scanner, continueGame);
+
+        } else if (newGame.isPlayerWin()) {
+            displayPlayerAndDealerHand();
+            System.out.println("\nHouse has a lower hand! Player Wins! +1 point - PLAYER\n");
+
+            playerPoints++;
+            playerWins++;
+
+            continueGame = isContinueGame(scanner, continueGame);
+
+        } else if (!newGame.isPlayerWin()) {
+            displayPlayerAndDealerHand();
+            System.out.println("\nPlayer has a lower hand! House Wins! +1 point - DEALER\n");
+
+            dealerPoints++;
+            playerLosses++;
+
+            continueGame = isContinueGame(scanner, continueGame);
+
+        }
+        return continueGame;
+    }
+
+    private boolean isContinueGame(Scanner scanner, boolean continueGame) {
+        if (askPlayerIfTheyWantToContinue(scanner)) {
+            startANewGame(false);
+        } else {
+            tallyPoints();
+            continueGame = false;
+
+            if (askPlayerToSave(scanner)) {
+
+                try {
+                    savePlayerFile(gameState);
+                } catch (FileNotFoundException e) {
+                    System.out.println("Unable to save file!");
+                }
+
+                mainMenu();
+            } else {
+                mainMenu();
+            }
+        }
+        return continueGame;
     }
 
     public boolean askPlayerIfTheyWantToContinue(Scanner scanner) {
@@ -368,10 +275,10 @@ public class BlackJackApp {
         }
 
         System.out.println("\nFrom the latest save:");
-        System.out.println("\nPLAYER POINTS : [" + Integer.toString(loadedGameState.getPlayerPoints()) + " point(s)]");
-        System.out.println("DEALER POINTS : [" + Integer.toString(loadedGameState.getDealerPoints()) + " point(s)]");
-        System.out.println("PLAYER WINS : [" + Integer.toString(loadedGameState.getPlayerWins()) + " win(s)]");
-        System.out.println("PLAYER LOSSES : [" + Integer.toString(loadedGameState.getPlayerLosses()) + " loss(es)]");
+        System.out.println("\nPLAYER POINTS : [" + loadedGameState.getPlayerPoints() + " point(s)]");
+        System.out.println("DEALER POINTS : [" + loadedGameState.getDealerPoints() + " point(s)]");
+        System.out.println("PLAYER WINS : [" + loadedGameState.getPlayerWins() + " win(s)]");
+        System.out.println("PLAYER LOSSES : [" + loadedGameState.getPlayerLosses() + " loss(es)]");
 
         startANewGame(true);
     }

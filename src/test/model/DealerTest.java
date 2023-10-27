@@ -3,18 +3,16 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import static model.DeckOfCards.denominations;
 import static model.DeckOfCards.suits;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DealerTest {
-    private Dealer testDealer;
-    private DeckOfCards testDeck;
     int initialDealerHandSum;
     int initialDealerAceCount;
+    private Dealer testDealer;
+    private DeckOfCards testDeck;
     private Card hiddenCard;
 
     @BeforeEach

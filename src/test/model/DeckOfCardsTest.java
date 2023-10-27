@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import static model.DeckOfCards.denominations;
 import static model.DeckOfCards.suits;
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class DeckOfCardsTest {
@@ -40,7 +40,7 @@ public class DeckOfCardsTest {
                 String currentCardStringRep = currentCard.toString();
 
                 assertEquals(cardStringRep, currentCardStringRep);
-                i++ ;
+                i++;
             }
         }
     }
@@ -51,7 +51,7 @@ public class DeckOfCardsTest {
         testDeckOfCards.shuffleDeck();
         ArrayList<Card> builtAndShuffledDeckOfCards = testDeckOfCards.getDeckOfCards();
 
-        for (Card currentCard: builtAndShuffledDeckOfCards) {
+        for (Card currentCard : builtAndShuffledDeckOfCards) {
             String currentCardDenomination = currentCard.getDenomination();
             String currentCardSuit = currentCard.getSuit();
             assertTrue(denominations.contains(currentCardDenomination));

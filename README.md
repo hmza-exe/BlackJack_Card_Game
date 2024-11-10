@@ -31,3 +31,5 @@ multiple player modes, there's ample room for growth and refinement.
 - As a user, I want to be able to keep track of my score.
 - As a user, I want to be able to save my progress if I want.
 - As a user, I want to be able to load my saved progress if I want.
+
+**_(This game is still under development, features regarding saving and score tracking are under development.)_**
